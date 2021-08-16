@@ -30,8 +30,7 @@ async function authenticate({ user_name, password },) {
         }
         return res
         // errorHandler('Username or password is incorrect', res)
-    }
-    //throw 'Username or password is incorrect';
+    }//throw 'Username or password is incorrect';
 
     // authentication successful
     const token = jwt.sign({ sub: user.id }, config.secret, { expiresIn: '7d' });
@@ -111,67 +110,22 @@ async function create(params) {
 
     // save user
     let user = await db.User.create(params);
-    // if (user) {
-    //     return {
-    //         result: 0,
-    //         data: user
-    //     }
-    // } else {
-    //     return {
-    //         result: 1,
-    //         data: "User create Error"
-    //     }
-    // }
-
+    
     return user
 }
 
 async function update(id, params, res) {
-    // const user = await getUser(id);
-
-    // validate
-    // const usernameChanged = params.user_name && user.user_name !== params.user_name;
-    // if (usernameChanged && await db.User.findOne({ where: { user_name: params.user_name } })) {
-
-    //     return {
-    //         result: 1,
-    //         message: 'Username "' + params.user_name + '" is already taken'
-    //     }
-    // }
-
+    
     // hash password if it was entered
     if (params.password) {
         params.hash = await bcrypt.hash(params.password, 10);
     }
 
-    // copy params to user and save
-    // Object.assign(user, params);
     let result = db.User.update(params, {
         where: { id: id }
-    })
-    // .then(num => {
-    //     if (num == 1) {
-    //         res.send({
-    //             result: 0,
-    //             message: "User was updated successfully."
-    //         });
-    //     } else {
-    //         res.send({
-    //             result: 1,
-    //             message: `Cannot update User with id=${id}. Maybe User was not found or req.body is empty!`
-    //         })
-    //     }
-    // })
-    // .catch(err => {
-    //     res.send({
-    //         result: 1,
-    //         message: "Error updating User with id=" + id
-    //     })
-    // });
+    })   
 
     return result
-
-
 }
 
 async function _delete(id) {
@@ -181,38 +135,7 @@ async function _delete(id) {
     });
 
     return result;
-    // .then(num => {
-    //     if (num == 1) {
-    //         return {
-    //             result: 0,
-    //             message: "User was deleted successfully!"
-    //         }
-    //     } else {
-    //         return {
-    //             result: 1,
-    //             message: `Cannot delete User with id=${id}. Maybe User was not found!`
-    //         }
-    //     }
-    // })
-    // .catch(err => {
-    //     return {
-    //         result: 1,
-    //         message: "Could not delete User with id=" + id
-    //     }
-    // });
-    // const user = await getUser(id);
-    // let res = await user.destroy();
-    // if (res) {
-    //     return {
-    //         result: 0,
-    //         message: "Delete Successful"
-    //     }
-    // } else {
-    //     return {
-    //         result: 1,
-    //         message: "Delete Error"
-    //     }
-    // }
+    
 }
 
 // helper functions

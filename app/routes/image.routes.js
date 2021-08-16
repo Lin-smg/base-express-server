@@ -1,4 +1,3 @@
-
 const image = require("../controllers/image.controller.js");
 
 var router = require("express").Router();

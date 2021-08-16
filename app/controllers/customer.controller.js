@@ -1,8 +1,7 @@
 const db = require("../models");
-const Customer = db.Customer;
 
 const customerService = require("../services/customer.service")
-
+// create customer
 exports.createCustomer = async (req, res) => {
     let { name, phone, address, email, status } = req.body;
 
@@ -29,7 +28,7 @@ exports.createCustomer = async (req, res) => {
         })
     }
 }
-
+// update customer
 exports.updateCustomer = async (req, res) => {
     const id = req.params.id;
     let data = req.body
@@ -55,7 +54,7 @@ exports.updateCustomer = async (req, res) => {
         })
     }
 }
-
+// get all customer
 exports.getAllCustomer = async (req, res) => {
     let {data, count} = await customerService.getAllCustomer();
 
@@ -67,7 +66,7 @@ exports.getAllCustomer = async (req, res) => {
         })
     }
 }
-
+// get customer using Id
 exports.getCustomerById = async (req, res) => {
     const id = req.params.id
     let data = await customerService.getCustomerById(id)
@@ -76,5 +75,21 @@ exports.getCustomerById = async (req, res) => {
         result: 0,
         data: data
     })
+}
+// delete customer
+exports.delete = async (req, res) => {
+    let result = await customerService.delete(req.params.id);
+
+    if (result == 1) {
+        res.send({
+            result: 0,
+            message: "User was deleted successfully!"
+        })
+    } else {
+        res.send({
+            result: 1,
+            message: `Cannot delete User with id=${id}. Maybe User was not found!`
+        })
+    }
 
 }

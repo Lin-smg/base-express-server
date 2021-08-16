@@ -20,7 +20,6 @@ module.exports = {
     getCurrent,
     getById,
     updateSchema,
-    update,
     _delete,
     create,
     getImage,
@@ -71,12 +70,7 @@ async function create(req, res, next) {
     } else {
         file_name = null
     }
-    // const tempPath = path.join(__dirname, "../../" + req.file.path);
-    // const targetPath = path.join(__dirname, "../../assets/images/users/" + file_name);
-
     data.photo = file_name
-
-    // fs.renameSync(tempPath, targetPath)
 
     let result = await userService.createUser(data)
 
@@ -102,9 +96,7 @@ async function updateUser(req, res) {
     if (user) {
 
         var file_name = null 
-
-        // const tempPath = path.join(__dirname, "../../" + req.file.path);
-        // const targetPath = path.join(__dirname, "../../assets/images/users/" + file_name);
+    
         if (req.file) {
             file_name = data.imgUrl ? data.imgUrl : new Date().getTime() + ".png";
 
@@ -112,14 +104,8 @@ async function updateUser(req, res) {
         }
 
         data.photo = file_name
-
-        // let filePath = path.join(__dirname, "../../assets/images/users/" + user.photo)
-        // fs.unlinkSync(filePath)
-
         let result = await userService.update(id, data)
-        //     .then(result => {
-        //     res.send(result)
-        // }).catch(next)
+        
         if (result == 1) {
             res.send({
                 result: 0,
@@ -139,7 +125,6 @@ async function updateUser(req, res) {
             message: "user not found"
         })
     }
-    // fs.unlinkSync(filePath)
 }
 
 function getImage(req, res) {
@@ -175,17 +160,6 @@ function updateSchema(req, res, next) {
         status: Joi.string().empty(''),
     });
     validateRequest(req, next, schema);
-}
-
-async function update(req, res, next) {
-    let result = await userService.update(req.params.id, req.body, res);
-    // res.send(result)
-    // .then(user => {
-    //     res.send(user)
-    // })
-    // .catch(next);
-
-    // res.send(result)
 }
 
 async function _delete(req, res, next) {
