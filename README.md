@@ -5,7 +5,7 @@ An easy way to get started with a Express server with Node.js.
 * git
 
 ## Installation
-* git clone 
-* cd 
+* git clone https://github.com/Lin-smg/base-express-server.git
+* cd base-express-server
 * npm install
 * npm start
